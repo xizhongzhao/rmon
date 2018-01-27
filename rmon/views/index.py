@@ -1,4 +1,4 @@
-""" rmon.view.index """
+""" rmon.views.index """
 from  flask import render_template
 from flask.views import MethodView
 
