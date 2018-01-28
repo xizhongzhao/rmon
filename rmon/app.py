@@ -16,11 +16,8 @@ def create_app():
         app.config.from_object(DevConfig)
     app.config.from_envvar('RMON_SETTINGS',silent=True)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#注册 blueprint
     app.register_blueprint(api)
-#初始化数据库    
     db.init_app(app)
-#如果是开发环境则创建所有数据库表
     if app.debug:
         with app.app_context():
             db.create_all()
