@@ -1,6 +1,8 @@
 """ the part of models """
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from redis import StrictRedis,RedisError
+from rmon.common.rest import RestException
 
 db = SQLAlchemy()
 
@@ -28,3 +30,21 @@ class Server(db.Model):
         """ delete data from the database """
         db.session.delete(self)
         db.session.commit()
+    
+    def ping(self):
+        """ check redis network is connect """
+        try:
+            return self.redis.ping()
+        except RedisError:
+            raise RestException(400,'redis server %s can not connected' %self.host)
+
+    def get_metrics(self):
+        """ get redis server details """
+        try:
+            return self.redis.info()
+        except RedisError:
+            raise RestException(400,'redis server %s can not connected' %self.host)
+
+    @property
+    def redis(self):
+        return StrictRedis(host=self.host,port=self.port,password=self.password)
