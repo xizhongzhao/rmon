@@ -22,3 +22,31 @@ class ServerList(RestView):
         server.ping()
         server.save()
         return {'ok':True},201
+
+class ServerDetail(RestView):
+    """ Redis server list
+    """
+    method_decorators = (ObjectMustBeExist(Server),)
+    
+    def get(self,object_id):
+        """ get  redis server detail
+        """
+        data,_ = ServerSchema().dump(g.instance)
+        return data
+
+    def put(self,object_id):
+        """ update redis server
+        """
+        schema = ServerSchema(context={'instance':g.instance})
+        data = request.get_json()
+        server,errors = schema.load(data,partial=True)
+        if errors:
+            return errors,400
+        server.save()
+        return {'ok':True}
+    
+    def delete(self,object_id):
+        """delete redis server
+        """
+        g.instance.delete()
+        return {'ok':True},204

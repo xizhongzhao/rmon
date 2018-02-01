@@ -38,3 +38,38 @@ class TestServerList:
         """
         """
         pass
+
+class TestServerDetail:
+    """test Redis server detail api
+    """
+    endpoint = 'api.server_detail'
+
+    def test_get_server_success(self,server,client):
+        """test get Redis server detail
+        """
+        pass
+
+    def test_get_server_failed(self,db,client):
+        """test get
+        """
+        pass 
+
+    def test_update_server_success(self,server,client):
+        """
+        """
+        pass
+
+    def test_update_server_success_with_duplicate_server(self,server,client):
+        """update server name for other
+        """
+        pass
+
+    def test_delete_success(self,server,client):
+        """delete redis server 
+        """
+        pass
+
+    def test_delete_failed_with_host_not_exist(self,db,client):
+        """
+        """
+        pass
